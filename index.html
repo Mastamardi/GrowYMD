@@ -600,6 +600,10 @@
         .call-now-button i {
             font-size: 1rem;
         }
+
+        .provider-detail i {
+            color: var(--primary-color);
+        }
     </style>
 </head>
 <body>
@@ -716,70 +720,6 @@
         </a>
     </div>
 
-    <button class="admin-toggle" id="adminToggle">Admin Panel</button>
-
-    <div class="admin-panel" id="adminPanel">
-        <div class="admin-form">
-            <h2>Add New Provider</h2>
-            <form id="providerForm">
-                <div class="form-group">
-                    <label for="photo">Photo URL:</label>
-                    <input type="text" id="photo" required placeholder="Enter image URL">
-                </div>
-                <div class="form-group">
-                    <label for="name">Full Name:</label>
-                    <input type="text" id="name" required>
-                </div>
-                <div class="form-group">
-                    <label for="phone">Mobile Number:</label>
-                    <input type="tel" id="phone" required>
-                </div>
-                <div class="form-group">
-                    <label for="service">Service Category:</label>
-                    <select id="service" required multiple>
-                        <option value="">Select a category</option>
-                        <option value="bearer">Bearer / Hamal</option>
-                        <option value="electrician">Electrician</option>
-                        <option value="plumber">Plumber</option>
-                        <option value="carpenter">Carpenter</option>
-                        <option value="painter">Painter</option>
-                        <option value="construction">Construction Labourer</option>
-                        <option value="water">Water Supply</option>
-                        <option value="auto">Auto Service (Short Range)</option>
-                        <option value="cab">Cab Service (Long Range)</option>
-                        <option value="swamy">Swamy</option>
-                        <option value="flower">Flower Vendor</option>
-                        <option value="decorator">Decorator</option>
-                        <option value="doctor">Doctor Service</option>
-                        <option value="mechanic">Mechanic Service</option>
-                        <option value="parlour">Parlour</option>
-                        <option value="tractor">Tractor or Goods Vehicle Renting</option>
-                        <option value="haircut">Hair Cutting in Home</option>
-                        <option value="caterer">Caterer</option>
-                        <option value="chair">Chair Rental Provider</option>
-                        <option value="cameraman">Cameraman</option>
-                        <option value="gas">Gas Stove Repair / Gas Pipeline Fitting</option>
-                        <option value="laundry">Laundry / Ironing Service</option>
-                        <option value="soundsystem">Sound System</option>
-                        <option value="welding">Welding</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="location">Location:</label>
-                    <input type="text" id="location" required>
-                </div>
-                <div class="form-group">
-                    <label for="availability">Available Time:</label>
-                    <input type="text" id="availability" required placeholder="e.g., 9 AM - 6 PM">
-                </div>
-                <div class="form-buttons">
-                    <button type="submit" class="btn btn-primary">Add Provider</button>
-                    <button type="button" class="btn btn-secondary" id="closeAdmin">Close</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
     <button class="language-toggle" id="languageToggle">
         <i class="fas fa-globe"></i>
         <span>ಕನ್ನಡ</span>
@@ -791,10 +731,6 @@
             const providersGrid = document.getElementById('providersGrid');
             const searchBar = document.querySelector('.search-bar');
             const categoryFilter = document.querySelector('.category-filter');
-            const adminToggle = document.getElementById('adminToggle');
-            const adminPanel = document.getElementById('adminPanel');
-            const providerForm = document.getElementById('providerForm');
-            const closeAdmin = document.getElementById('closeAdmin');
             const languageToggle = document.getElementById('languageToggle');
             const headerTitle = document.querySelector('header h1');
             const headerSubtitle = document.querySelector('header p');
@@ -1436,31 +1372,6 @@
                 addRemoveText.textContent = translations[currentLanguage].addRemoveText;
                 aboutUsTitle.textContent = translations[currentLanguage].aboutUs;
 
-                // Update admin panel
-                document.querySelector('.btn-primary').textContent = translations[currentLanguage].addProvider;
-                closeAdmin.textContent = translations[currentLanguage].close;
-                document.querySelector('label[for="name"]').textContent = translations[currentLanguage].fullName;
-                document.querySelector('label[for="phone"]').textContent = translations[currentLanguage].mobileNumber;
-                document.querySelector('label[for="service"]').textContent = translations[currentLanguage].serviceCategory;
-                document.querySelector('label[for="location"]').textContent = translations[currentLanguage].location;
-                document.querySelector('label[for="availability"]').textContent = translations[currentLanguage].availableTime;
-                document.querySelector('label[for="photo"]').textContent = translations[currentLanguage].photoUrl;
-
-                // Update service categories in dropdown
-                const categoryOptions = categoryFilter.querySelectorAll('option');
-                categoryOptions.forEach(option => {
-                    if (option.value) {
-                        option.textContent = translations[currentLanguage][option.value];
-                    }
-                });
-
-                // Update displayed service category names on cards
-                document.querySelectorAll('.service-category-card').forEach(card => {
-                    const categoryKey = card.dataset.category;
-                    const categoryDisplayName = translations[currentLanguage][categoryKey] || serviceCategoryDetails[categoryKey]?.name || categoryKey.charAt(0).toUpperCase() + categoryKey.slice(1);
-                    card.querySelector('h3').textContent = categoryDisplayName;
-                });
-
                 // Update language toggle
                 const languageText = languageToggle.querySelector('span');
                 languageText.textContent = currentLanguage === 'en' ? 'ಕನ್ನಡ' : 'English';
@@ -1477,72 +1388,24 @@
                 updateLanguage();
             }
 
-            function addProvider(event) {
-                event.preventDefault();
-                
-                const service = document.getElementById('service').value;
-                const newProvider = {
-                    id: Date.now(),
-                    name: document.getElementById('name').value,
-                    phone: document.getElementById('phone').value,
-                    location: document.getElementById('location').value,
-                    availability: document.getElementById('availability').value,
-                    photo: `services/${service}/${document.getElementById('name').value.toLowerCase().replace(/\s+/g, '-')}.jpg`
-                };
-
-                if (!providers[service]) {
-                    providers[service] = [];
-                }
-                providers[service].push(newProvider);
-                localStorage.setItem('providers', JSON.stringify(providers));
-                
-                renderProviders(providers); // Render all providers to show new one
-                providerForm.reset();
-                adminPanel.classList.remove('active');
-            }
-
-            // Settings Modal Functionality
-            function showSection(sectionId) {
-                // Hide all sections
-                document.querySelectorAll('.section').forEach(section => {
-                    section.classList.remove('active');
-                });
-                // Show selected section
-                document.getElementById(sectionId).classList.add('active');
-            }
-
-            // Track settings interactions with Google Analytics
-            function trackSettingsInteraction(action) {
-                gtag('event', 'settings_interaction', {
-                    'event_category': 'Settings',
-                    'event_label': action
-                });
-            }
-
             // Event Listeners
             searchBar.addEventListener('input', handleSearchAndFilter);
             categoryFilter.addEventListener('change', handleSearchAndFilter);
-            adminToggle.addEventListener('click', () => adminPanel.classList.add('active'));
-            closeAdmin.addEventListener('click', () => adminPanel.classList.remove('active'));
-            providerForm.addEventListener('submit', addProvider);
             languageToggle.addEventListener('click', toggleLanguage);
             backToCategoriesBtn.addEventListener('click', showAllCategories);
 
             // Event listeners for settings modal
             settingsIcon.addEventListener('click', () => {
                 settingsModal.classList.add('active');
-                trackSettingsInteraction('open_settings');
             });
 
             closeSettings.addEventListener('click', () => {
                 settingsModal.classList.remove('active');
-                trackSettingsInteraction('close_settings');
             });
 
             settingsModal.addEventListener('click', (e) => {
                 if (e.target === settingsModal) {
                     settingsModal.classList.remove('active');
-                    trackSettingsInteraction('close_settings_overlay');
                 }
             });
 
@@ -1551,7 +1414,6 @@
                     const sectionId = event.currentTarget.dataset.section;
                     if (sectionId) {
                         showSection(sectionId);
-                        trackSettingsInteraction(button.textContent.trim());
                     }
                 });
             });
