@@ -576,6 +576,30 @@
         .add-provider-button i {
             font-size: 1.4rem;
         }
+
+        /* Add this CSS in the style section */
+        .call-now-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            text-decoration: none;
+            margin-top: 1rem;
+            transition: background-color 0.2s;
+            width: 100%;
+            justify-content: center;
+        }
+
+        .call-now-button:hover {
+            background-color: var(--secondary-color);
+        }
+
+        .call-now-button i {
+            font-size: 1rem;
+        }
     </style>
 </head>
 <body>
@@ -1252,10 +1276,6 @@
                         <div class="provider-info">
                             <h3 class="provider-name">${provider.name}</h3>
                             <div class="provider-detail">
-                                <i class="fas fa-phone"></i>
-                                <a href="tel:${provider.phone}">${provider.phone}</a>
-                            </div>
-                            <div class="provider-detail">
                                 <i class="fas fa-briefcase"></i>
                                 <span>${serviceDisplayName}</span>
                             </div>
@@ -1267,6 +1287,10 @@
                                 <i class="fas fa-map-marker-alt"></i>
                                 <span>${provider.location}</span>
                             </div>
+                            <a href="tel:${provider.phone}" class="call-now-button">
+                                <i class="fas fa-phone"></i>
+                                Call Now
+                            </a>
                         </div>
                     </div>
                 `;
