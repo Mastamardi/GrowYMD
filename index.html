@@ -1,0 +1,1541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GrowYMD - Yamakanamardi Service Providers</title>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H9P7DVY94J"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-H9P7DVY94J');
+    </script>
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #2e7d32;
+            --secondary-color: #4caf50;
+            --light-color: #f1f8e9;
+            --text-color: #333;
+            --card-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }
+
+        body {
+            background-color: var(--light-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1rem;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .banner {
+            background-color: #ff9800;
+            color: white;
+            padding: 0.5rem;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        /* Search and Filter Styles */
+        .search-container {
+            background: white;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            box-shadow: var(--card-shadow);
+        }
+
+        .search-bar {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+            font-size: 1rem;
+        }
+
+        .category-filter {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+            background-color: white;
+        }
+
+        /* Service Category Grid */
+        .service-categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem;
+            padding: 1rem 0;
+        }
+
+        .service-category-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+            transition: transform 0.2s;
+            text-align: center;
+            cursor: pointer;
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .service-category-card:hover {
+            transform: translateY(-2px);
+        }
+
+        .service-category-card img {
+            width: 100px; /* Adjusted size for icons */
+            height: 100px;
+            object-fit: contain;
+            margin-bottom: 0.5rem;
+        }
+
+        .service-category-card h3 {
+            font-size: 1.1rem;
+            color: var(--primary-color);
+            margin-top: 0.5rem;
+        }
+
+        /* Provider Cards */
+        .providers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1rem;
+            padding: 1rem 0;
+        }
+
+        .providers-grid-inner { /* Added to prevent conflict with outer .providers-grid */
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1rem;
+            padding: 1rem 0;
+        }
+
+        .provider-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+            transition: transform 0.2s;
+        }
+
+        .provider-card:hover {
+            transform: translateY(-2px);
+        }
+
+        .provider-image {
+            width: 100%;
+            height: 250px;
+            object-fit: contain;
+            border-bottom: 1px solid #eee;
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
+        }
+
+        .provider-info {
+            padding: 1rem;
+        }
+
+        .provider-name {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .provider-detail {
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .provider-detail i {
+            color: var(--primary-color);
+        }
+
+        /* Admin Panel */
+        .admin-toggle {
+            position: fixed;
+            bottom: 1rem;
+            right: 1rem;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            z-index: 1000;
+        }
+
+        .admin-panel {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.8);
+            z-index: 1000;
+            padding: 2rem;
+            overflow-y: auto;
+        }
+
+        .admin-panel.active {
+            display: block;
+        }
+
+        .admin-form {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            max-width: 500px;
+            margin: 2rem auto;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        .form-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .btn {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.2s;
+        }
+
+        .btn-primary {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: #666;
+            color: white;
+        }
+
+        /* Language Toggle */
+        .language-toggle {
+            position: fixed;
+            top: 1rem;
+            left: 1rem;
+            background: white;
+            border: 1px solid var(--primary-color);
+            color: var(--primary-color);
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            z-index: 100;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .language-toggle:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .language-toggle i {
+            font-size: 1rem;
+        }
+
+        /* Settings Icon and Modal Styles */
+        .settings-icon {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            background: white;
+            border: 1px solid var(--primary-color);
+            color: var(--primary-color);
+            padding: 0.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            z-index: 1000;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .settings-icon:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .providers-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .admin-panel {
+                padding: 1rem;
+            }
+
+            .admin-form {
+                margin: 1rem;
+            }
+
+            .language-toggle {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.8rem;
+            }
+
+            .settings-icon {
+                width: 36px;
+                height: 36px;
+            }
+
+            .settings-content {
+                margin: 1rem;
+                max-height: calc(100vh - 2rem);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .language-toggle {
+                padding: 0.3rem 0.6rem;
+                font-size: 0.75rem;
+            }
+
+            .settings-icon {
+                width: 32px;
+                height: 32px;
+            }
+        }
+
+        /* New CSS for service titles */
+        .service-title {
+            margin: 2rem 0 1rem;
+            padding: 0.5rem;
+            background: var(--primary-color);
+            color: white;
+            border-radius: 4px;
+        }
+
+        /* Settings Icon and Modal Styles */
+        .settings-icon {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            background: white;
+            border: 1px solid var(--primary-color);
+            color: var(--primary-color);
+            padding: 0.5rem;
+            border-radius: 50%;
+            cursor: pointer;
+            z-index: 1000;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .settings-icon:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .settings-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 1001;
+            padding: 1rem;
+        }
+
+        .settings-modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .settings-content {
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            width: 100%;
+            max-width: 500px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .settings-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .settings-header h2 {
+            color: var(--primary-color);
+        }
+
+        .close-settings {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-color);
+        }
+
+        .settings-menu {
+            list-style: none;
+        }
+
+        .settings-menu li {
+            margin-bottom: 1rem;
+        }
+
+        .settings-menu button {
+            width: 100%;
+            padding: 0.8rem;
+            text-align: left;
+            background: none;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .settings-menu button:hover {
+            background-color: var(--light-color);
+        }
+
+        /* Section Styles */
+        .section {
+            display: none;
+            padding: 1rem;
+            background: white;
+            border-radius: 8px;
+            margin-top: 1rem;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            color: var(--primary-color);
+            font-size: 1.5rem;
+            transition: color 0.2s;
+        }
+
+        .social-links a:hover {
+            color: var(--secondary-color);
+        }
+
+        /* Existing styles... */
+        /* Header Styles */
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1rem;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .settings-content {
+                margin: 1rem;
+                max-height: calc(100vh - 2rem);
+            }
+        }
+
+        /* Add this CSS in the style section */
+        .form-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            text-decoration: none;
+            margin-top: 1rem;
+            transition: background-color 0.2s;
+        }
+
+        .form-button:hover {
+            background-color: var(--secondary-color);
+        }
+
+        .form-button i {
+            font-size: 1rem;
+        }
+
+        /* Add this CSS in the style section */
+        .add-provider-banner {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            text-align: center;
+            margin-bottom: 1rem;
+            box-shadow: var(--card-shadow);
+        }
+
+        .add-provider-banner p {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            color: var(--text-color);
+        }
+
+        .add-provider-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 4px;
+            text-decoration: none;
+            font-size: 1.2rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .add-provider-button:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+
+        .add-provider-button i {
+            font-size: 1.4rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>GrowYMD</h1>
+        <p>Find Local Service Providers in Yamakanamardi</p>
+    </header>
+
+    <div class="banner">
+        Welcome to GrowYMD - Your Local Service Directory
+    </div>
+
+    <button class="settings-icon" id="settingsIcon">
+        <i class="fas fa-cog"></i>
+    </button>
+
+    <div class="settings-modal" id="settingsModal">
+        <div class="settings-content">
+            <div class="settings-header">
+                <h2>Settings</h2>
+                <button class="close-settings" id="closeSettings">&times;</button>
+            </div>
+            <ul class="settings-menu">
+                <li>
+                    <button data-section="howItWorks">How It Works?</button>
+                </li>
+                <li>
+                    <button data-section="addRemove">Add / Remove People</button>
+                </li>
+                <li>
+                    <button data-section="aboutUs">About Us</button>
+                </li>
+            </ul>
+
+            <div id="howItWorks" class="section">
+                <h3>How It Works?</h3>
+                <p>This section will guide users on how to use the website. A demo video will be uploaded here soon.</p>
+            </div>
+
+            <div id="addRemove" class="section">
+                <h3>Add / Remove People</h3>
+                <p>Want to add or remove service providers? Fill out our form below:</p>
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLScOJAzfr8kqzotnvWdRoa47MI01556EmhpDq-WhJteQ-Tqswg/viewform?usp=dialog" target="_blank" class="form-button">
+                    <i class="fas fa-external-link-alt"></i>
+                    Open Form
+                </a>
+            </div>
+
+            <div id="aboutUs" class="section">
+                <h3>About Us</h3>
+                <p><strong>Omkar Babu Mastamardi</strong></p>
+                <p>RV College of Engineering</p>
+                <p>Artificial Intelligence and Machine Learning (AI/ML)</p>
+                <div class="social-links">
+                    <a href="https://www.instagram.com/omkar_mastamardi?igsh=NG45djQyazVxdWZw" target="_blank"><i class="fab fa-instagram"></i></a>
+                    <a href="https://omkarmastamardi.vercel.app/" target="_blank"><i class="fas fa-briefcase"></i></a>
+                    <a href="https://www.linkedin.com/in/omkar62/" target="_blank"><i class="fab fa-linkedin"></i></a>
+                    <a href="https://github.com/Mastamardi" target="_blank"><i class="fab fa-github"></i></a>
+                    <a href="https://leetcode.com/u/A5wyrsy1yo/" target="_blank"><i class="fas fa-code"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="search-container">
+            <input type="text" class="search-bar" placeholder="Search by name, service, or location...">
+            <select class="category-filter">
+                <option value="">All Categories</option>
+                <option value="bearer">Bearer / Hamal</option>
+                <option value="electrician">Electrician</option>
+                <option value="plumber">Plumber</option>
+                <option value="carpenter">Carpenter</option>
+                <option value="painter">Painter</option>
+                <option value="construction">Construction Labourer</option>
+                <option value="water">Water Supply</option>
+                <option value="auto">Auto Service (Short Range)</option>
+                <option value="cab">Cab Service (Long Range)</option>
+                <option value="swamy">Swamy</option>
+                <option value="flower">Flower Vendor</option>
+                <option value="decorator">Decorator</option>
+                <option value="doctor">Doctor Service</option>
+                <option value="mechanic">Mechanic Service</option>
+                <option value="parlour">Parlour</option>
+                <option value="tractor">Tractor or Goods Vehicle Renting</option>
+                <option value="haircut">Hair Cutting in Home</option>
+                <option value="caterer">Caterer</option>
+                <option value="chair">Chair Rental Provider</option>
+                <option value="cameraman">Cameraman</option>
+                <option value="gas">Gas Stove Repair / Gas Pipeline Fitting</option>
+                <option value="laundry">Laundry / Ironing Service</option>
+                <option value="soundsystem">Sound System</option>
+                <option value="welding">Welding</option>
+            </select>
+        </div>
+
+        <!-- New section for service category cards -->
+        <div class="service-categories-grid" id="serviceCategoriesGrid">
+            <!-- Service category cards will be dynamically inserted here -->
+        </div>
+
+        <!-- Existing providers grid, initially hidden -->
+        <button class="btn btn-secondary" id="backToCategoriesBtn" style="display: none;">← Back to All Services</button>
+        <div class="providers-grid" id="providersGrid" style="display: none;">
+            <!-- Provider cards will be dynamically inserted here -->
+        </div>
+    </div>
+
+    <div class="add-provider-banner">
+        <p>Are you a service provider in Yamakanamardi?</p>
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLScOJAzfr8kqzotnvWdRoa47MI01556EmhpDq-WhJteQ-Tqswg/viewform?usp=dialog" target="_blank" class="add-provider-button">
+            <i class="fas fa-plus-circle"></i>
+            Add Your Service
+        </a>
+    </div>
+
+    <button class="admin-toggle" id="adminToggle">Admin Panel</button>
+
+    <div class="admin-panel" id="adminPanel">
+        <div class="admin-form">
+            <h2>Add New Provider</h2>
+            <form id="providerForm">
+                <div class="form-group">
+                    <label for="photo">Photo URL:</label>
+                    <input type="text" id="photo" required placeholder="Enter image URL">
+                </div>
+                <div class="form-group">
+                    <label for="name">Full Name:</label>
+                    <input type="text" id="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Mobile Number:</label>
+                    <input type="tel" id="phone" required>
+                </div>
+                <div class="form-group">
+                    <label for="service">Service Category:</label>
+                    <select id="service" required multiple>
+                        <option value="">Select a category</option>
+                        <option value="bearer">Bearer / Hamal</option>
+                        <option value="electrician">Electrician</option>
+                        <option value="plumber">Plumber</option>
+                        <option value="carpenter">Carpenter</option>
+                        <option value="painter">Painter</option>
+                        <option value="construction">Construction Labourer</option>
+                        <option value="water">Water Supply</option>
+                        <option value="auto">Auto Service (Short Range)</option>
+                        <option value="cab">Cab Service (Long Range)</option>
+                        <option value="swamy">Swamy</option>
+                        <option value="flower">Flower Vendor</option>
+                        <option value="decorator">Decorator</option>
+                        <option value="doctor">Doctor Service</option>
+                        <option value="mechanic">Mechanic Service</option>
+                        <option value="parlour">Parlour</option>
+                        <option value="tractor">Tractor or Goods Vehicle Renting</option>
+                        <option value="haircut">Hair Cutting in Home</option>
+                        <option value="caterer">Caterer</option>
+                        <option value="chair">Chair Rental Provider</option>
+                        <option value="cameraman">Cameraman</option>
+                        <option value="gas">Gas Stove Repair / Gas Pipeline Fitting</option>
+                        <option value="laundry">Laundry / Ironing Service</option>
+                        <option value="soundsystem">Sound System</option>
+                        <option value="welding">Welding</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="location">Location:</label>
+                    <input type="text" id="location" required>
+                </div>
+                <div class="form-group">
+                    <label for="availability">Available Time:</label>
+                    <input type="text" id="availability" required placeholder="e.g., 9 AM - 6 PM">
+                </div>
+                <div class="form-buttons">
+                    <button type="submit" class="btn btn-primary">Add Provider</button>
+                    <button type="button" class="btn btn-secondary" id="closeAdmin">Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <button class="language-toggle" id="languageToggle">
+        <i class="fas fa-globe"></i>
+        <span>ಕನ್ನಡ</span>
+    </button>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // DOM Elements
+            const providersGrid = document.getElementById('providersGrid');
+            const searchBar = document.querySelector('.search-bar');
+            const categoryFilter = document.querySelector('.category-filter');
+            const adminToggle = document.getElementById('adminToggle');
+            const adminPanel = document.getElementById('adminPanel');
+            const providerForm = document.getElementById('providerForm');
+            const closeAdmin = document.getElementById('closeAdmin');
+            const languageToggle = document.getElementById('languageToggle');
+            const headerTitle = document.querySelector('header h1');
+            const headerSubtitle = document.querySelector('header p');
+            const bannerText = document.querySelector('.banner');
+            const settingsTitle = document.querySelector('.settings-header h2');
+            const howItWorksTitle = document.querySelector('#howItWorks h3');
+            const howItWorksText = document.querySelector('#howItWorks p');
+            const addRemoveTitle = document.querySelector('#addRemove h3');
+            const addRemoveText = document.querySelector('#addRemove p');
+            const aboutUsTitle = document.querySelector('#aboutUs h3');
+            const serviceCategoriesGrid = document.getElementById('serviceCategoriesGrid');
+            const backToCategoriesBtn = document.getElementById('backToCategoriesBtn');
+            const settingsIcon = document.getElementById('settingsIcon');
+            const settingsModal = document.getElementById('settingsModal');
+            const closeSettings = document.getElementById('closeSettings');
+
+            // Sample data structure
+            let providers = JSON.parse(localStorage.getItem('providers')) || {
+                bearer: [
+                    {
+                        id: 30,
+                        name: "Guru Kattimani",
+                        phone: "+91 9876543222",
+                        location: "Main Road, Yamakanamardi",
+                        availability: "9 AM - 6 PM",
+                        photo: "services/Bearer/GuruKattimani.jpg"
+                    },
+                    {
+                        id: 31,
+                        name: "Prashant Aralikatti",
+                        phone: "+91 8765432111",
+                        location: "Near Temple Road, Yamakanamardi",
+                        availability: "8 AM - 7 PM",
+                        photo: "services/Bearer/PrashantAralikatti.jpg"
+                    },
+                    {
+                        id: 32,
+                        name: "Uttam Girannavar",
+                        phone: "+91 7654321096",
+                        location: "Industrial Area, Yamakanamardi",
+                        availability: "8 AM - 5 PM",
+                        photo: "services/Bearer/UttamGirannavar.jpg"
+                    }
+                ],
+                flower: [
+                    {
+                        id: 4,
+                        name: "Sayed Shidlyalli",
+                        phone: "+91 7975829850",
+                        location: "Yamakanamardi - 591246",
+                        availability: "24*7 (Available Anytime)",
+                        photo: "services/ Flower vendor/SayedShidlyalli.jpg"
+                    }
+                ],
+                electrician: [
+                    {
+                        id: 1,
+                        name: "Mahesh Kulkarni",
+                        phone: "+91 9876543210",
+                        location: "Main Road, Yamakanamardi",
+                        availability: "9 AM - 6 PM",
+                        photo: "services/Electritian/MaheshKulkarni.jpg"
+                    },
+                    {
+                        id: 2,
+                        name: "Mahantesh Huddar",
+                        phone: "+91 8765432109",
+                        location: "Near Temple Road, Yamakanamardi",
+                        availability: "8 AM - 7 PM",
+                        photo: "services/Electritian/MahanteshHuddar.jpg"
+                    },
+                    {
+                        id: 3,
+                        name: "Kadappa Jugol",
+                        phone: "+91 7654321098",
+                        location: "Industrial Area, Yamakanamardi",
+                        availability: "8 AM - 5 PM",
+                        photo: "services/Electritian/KadappaJugol.jpg"
+                    }
+                ],
+                plumber: [
+                    {
+                        id: 2,
+                        name: "Suresh Gowda",
+                        phone: "+91 8765432109",
+                        location: "Near Temple Road, Yamakanamardi",
+                        availability: "8 AM - 7 PM",
+                        photo: "services/plumber/suresh-gowda.jpg"
+                    }
+                ],
+                carpenter: [
+                    {
+                        id: 4,
+                        name: "Sagar Badiger",
+                        phone: "+91 9876543211",
+                        location: "Main Road, Yamakanamardi",
+                        availability: "9 AM - 6 PM",
+                        photo: "services/Carpenter/SagarBadiger.jpg"
+                    },
+                    {
+                        id: 5,
+                        name: "Uttam Badiger",
+                        phone: "+91 8765432101",
+                        location: "Near Temple Road, Yamakanamardi",
+                        availability: "8 AM - 7 PM",
+                        photo: "services/Carpenter/UttamBadiger.jpg"
+                    },
+                    {
+                        id: 6,
+                        name: "Eknath Badiger",
+                        phone: "+91 7654321091",
+                        location: "Industrial Area, Yamakanamardi",
+                        availability: "8 AM - 5 PM",
+                        photo: "services/Carpenter/EknathBadiger.jpg"
+                    },
+                    {
+                        id: 7,
+                        name: "Balachandra Badiger",
+                        phone: "+91 9876543212",
+                        location: "Main Road, Yamakanamardi",
+                        availability: "9 AM - 6 PM",
+                        photo: "services/Carpenter/BalachandraBadiger.jpg"
+                    },
+                    {
+                        id: 8,
+                        name: "Tukaram Badiger",
+                        phone: "+91 8765432102",
+                        location: "Near Temple Road, Yamakanamardi",
+                        availability: "8 AM - 7 PM",
+                        photo: "services/Carpenter/TukaramBadiger.jpg"
+                    },
+                    {
+                        id: 9,
+                        name: "Sadashiv Badiger",
+                        phone: "+91 7654321092",
+                        location: "Industrial Area, Yamakanamardi",
+                        availability: "8 AM - 5 PM",
+                        photo: "services/Carpenter/SadashivBadiger.jpg"
+                    },
+                    {
+                        id: 10,
+                        name: "Sachin Kammar",
+                        phone: "+91 9876543213",
+                        location: "Main Road, Yamakanamardi",
+                        availability: "9 AM - 6 PM",
+                        photo: "services/Carpenter/SachinKammar.jpg"
+                    },
+                    {
+                        id: 11,
+                        name: "Suresh Kammar",
+                        phone: "+91 8765432103",
+                        location: "Near Temple Road, Yamakanamardi",
+                        availability: "8 AM - 7 PM",
+                        photo: "services/Carpenter/SureshKammar.jpg"
+                    }
+                ],
+                water: [
+                    {
+                        id: 12,
+                        name: "Suresh Nilajagi",
+                        phone: "+91 9876543214",
+                        location: "Main Road, Yamakanamardi",
+                        availability: "9 AM - 6 PM",
+                        photo: "services/Water supply /SureshNilajagi.jpg"
+                    },
+                    {
+                        id: 13,
+                        name: "Hanamant Baragali",
+                        phone: "+91 8765432104",
+                        location: "Near Temple Road, Yamakanamardi",
+                        availability: "8 AM - 7 PM",
+                        photo: "services/Water supply /HanamantBaragali.jpg"
+                    }
+                ],
+                auto: [
+                    {
+                        id: 14,
+                        name: "Mirasab Lokapuri",
+                        phone: "+91 9876543215",
+                        location: "Main Road, Yamakanamardi",
+                        availability: "9 AM - 6 PM",
+                        photo: "services/Auto Service/MirasabLokapuri.jpg"
+                    },
+                    {
+                        id: 15,
+                        name: "Mudassar Khalifa",
+                        phone: "+91 8765432105",
+                        location: "Near Temple Road, Yamakanamardi",
+                        availability: "8 AM - 7 PM",
+                        photo: "services/Auto Service/Mudassarkhalifa.jpg"
+                    },
+                    {
+                        id: 16,
+                        name: "Mansoor Shidlyali",
+                        phone: "+91 7654321093",
+                        location: "Industrial Area, Yamakanamardi",
+                        availability: "8 AM - 5 PM",
+                        photo: "services/Auto Service/MansoorShidlyali.jpg"
+                    }
+                ],
+                soundsystem: [
+                    {
+                        id: 17,
+                        name: "Mahantesh Sarapuri",
+                        phone: "+91 9876543216",
+                        location: "Main Road, Yamakanamardi",
+                        availability: "9 AM - 6 PM",
+                        photo: "services/SoundSystem/MahanteshSarapuri.jpg"
+                    }
+                ],
+                cab: [
+                    {
+                        id: 18,
+                        name: "Santosh Pangannavar",
+                        phone: "+91 9876543217",
+                        location: "Main Road, Yamakanamardi",
+                        availability: "9 AM - 6 PM",
+                        photo: "services/ Cab service/SantoshPangannavar.jpg"
+                    },
+                    {
+                        id: 19,
+                        name: "Iranna Badiger",
+                        phone: "+91 8765432106",
+                        location: "Near Temple Road, Yamakanamardi",
+                        availability: "8 AM - 7 PM",
+                        photo: "services/ Cab service/IrannaBadiger.jpg"
+                    },
+                    {
+                        id: 20,
+                        name: "Santosh Gajabari",
+                        phone: "+91 7654321094",
+                        location: "Industrial Area, Yamakanamardi",
+                        availability: "8 AM - 5 PM",
+                        photo: "services/ Cab service/SantoshGajabari.jpg"
+                    },
+                    {
+                        id: 21,
+                        name: "Kashinath Jirali",
+                        phone: "+91 9876543218",
+                        location: "Main Road, Yamakanamardi",
+                        availability: "9 AM - 6 PM",
+                        photo: "services/ Cab service/KashinathJirali.jpg"
+                    },
+                    {
+                        id: 22,
+                        name: "Basavaraj Gundakalli",
+                        phone: "+91 8765432107",
+                        location: "Near Temple Road, Yamakanamardi",
+                        availability: "8 AM - 7 PM",
+                        photo: "services/ Cab service/BasavarajGundakalli.jpg"
+                    }
+                ],
+                cameraman: [
+                    {
+                        id: 23,
+                        name: "Ankur Sutar",
+                        phone: "+91 9876543219",
+                        location: "Main Road, Yamakanamardi",
+                        availability: "9 AM - 6 PM",
+                        photo: "services/Cameraman /AnkurSutar.jpg"
+                    }
+                ],
+                decorator: [
+                    {
+                        id: 24,
+                        name: "Sayed Shidlyalli",
+                        phone: "+91 8765432108",
+                        location: "Near Temple Road, Yamakanamardi",
+                        availability: "8 AM - 7 PM",
+                        photo: "services/Decorator/SayedShidlyalli.jpg"
+                    }
+                ],
+                gas: [
+                    {
+                        id: 25,
+                        name: "Chayappa Samay",
+                        phone: "+91 9876543220",
+                        location: "Main Road, Yamakanamardi",
+                        availability: "9 AM - 6 PM",
+                        photo: "services/Gas Stove Repair : Gas Pipeline Fitting/ChayappaSamay.jpg"
+                    }
+                ],
+                painter: [
+                    {
+                        id: 26,
+                        name: "Mahesh Kulkarni",
+                        phone: "+91 8765432109",
+                        location: "Near Temple Road, Yamakanamardi",
+                        availability: "8 AM - 7 PM",
+                        photo: "services/Painter/MaheshKulkarni.jpg"
+                    },
+                    {
+                        id: 27,
+                        name: "Raghu Kattimani",
+                        phone: "+91 7654321095",
+                        location: "Industrial Area, Yamakanamardi",
+                        availability: "8 AM - 5 PM",
+                        photo: "services/Painter/RaghuKattimani.jpg"
+                    }
+                ],
+                tractor: [
+                    {
+                        id: 28,
+                        name: "Hanamanth Baragali",
+                        phone: "+91 9876543221",
+                        location: "Main Road, Yamakanamardi",
+                        availability: "9 AM - 6 PM",
+                        photo: "services/Tactor or Goods vehicle renting/HanamanthBaragali.jpg"
+                    }
+                ],
+                welding: [
+                    {
+                        id: 29,
+                        name: "Shivu Kammar",
+                        phone: "+91 8765432110",
+                        location: "Near Temple Road, Yamakanamardi",
+                        availability: "8 AM - 7 PM",
+                        photo: "services/Welding/ShivuKammar.jpg"
+                    }
+                ]
+            };
+
+            // Service Category Details (for images and display names)
+            const serviceCategoryDetails = {
+                bearer: { name: "Bearer / Hamal", image: "assets/service_icons/bearer.png" },
+                electrician: { name: "Electrician", image: "assets/service_icons/electrician.jpeg" },
+                plumber: { name: "Plumber", image: "assets/service_icons/plumber.jpg" },
+                carpenter: { name: "Carpenter", image: "assets/service_icons/carpenter.png" },
+                painter: { name: "Painter", image: "assets/service_icons/painter.jpg" },
+                construction: { name: "Construction Labourer", image: "assets/service_icons/construction.jpeg" },
+                water: { name: "Water Supply", image: "assets/service_icons/water.jpg" },
+                auto: { name: "Auto Service (Short Range)", image: "assets/service_icons/auto.jpg" },
+                cab: { name: "Cab Service (Long Range)", image: "assets/service_icons/cab.png" },
+                swamy: { name: "Swamy", image: "assets/service_icons/swamy.jpg" },
+                flower: { name: "Flower Vendor", image: "assets/service_icons/flower.webp" },
+                decorator: { name: "Decorator", image: "assets/service_icons/decorator.webp" },
+                doctor: { name: "Doctor Service", image: "assets/service_icons/doctor.avif" },
+                mechanic: { name: "Mechanic Service", image: "assets/service_icons/mechanic.jpeg" },
+                parlour: { name: "Parlour", image: "assets/service_icons/parlour.webp" },
+                tractor: { name: "Tractor or Goods Vehicle Renting", image: "assets/service_icons/tractor.jpeg" },
+                haircut: { name: "Hair Cutting in Home", image: "assets/service_icons/haircut.jpg" },
+                caterer: { name: "Caterer", image: "assets/service_icons/caterer.jpeg" },
+                chair: { name: "Chair Rental Provider", image: "assets/service_icons/chair.jpg" },
+                cameraman: { name: "Cameraman", image: "assets/service_icons/cameraman.webp" },
+                gas: { name: "Gas Stove Repair / Gas Pipeline Fitting", image: "assets/service_icons/gas.avif" },
+                laundry: { name: "Laundry / Ironing Service", image: "assets/service_icons/laundry.avif" },
+                soundsystem: { name: "Sound System", image: "assets/service_icons/soundsystem.jpeg" },
+                welding: { name: "Welding", image: "assets/service_icons/welding.avif" }
+            };
+
+            // Language state
+            let currentLanguage = 'en';
+            const translations = {
+                en: {
+                    // Header
+                    title: "GrowYMD",
+                    subtitle: "Find Local Service Providers in Yamakanamardi",
+                    banner: "Welcome to GrowYMD - Your Local Service Directory",
+                    
+                    // Search and Filter
+                    search: "Search by name, service, or location...",
+                    allCategories: "All Categories",
+                    backToAllServices: "Back to All Services",
+                    noProvidersFound: "No providers found for your criteria.",
+                    noProvidersAvailable: "No providers available.",
+                    
+                    // Settings
+                    settings: "Settings",
+                    howItWorks: "How It Works?",
+                    addRemove: "Add / Remove People",
+                    aboutUs: "About Us",
+                    
+                    // Settings Content
+                    howItWorksText: "This section will guide users on how to use the website. A demo video will be uploaded here soon.",
+                    addRemoveText: "Feature coming soon. You will be able to add or remove people via a Google Form.",
+                    
+                    // Admin Panel
+                    addProvider: "Add Provider",
+                    close: "Close",
+                    fullName: "Full Name",
+                    mobileNumber: "Mobile Number",
+                    serviceCategory: "Service Category",
+                    location: "Location",
+                    availableTime: "Available Time",
+                    photoUrl: "Photo URL",
+                    
+                    // Service Categories (using keys from serviceCategoryDetails for consistency)
+                    bearer: "Bearer / Hamal",
+                    electrician: "Electrician",
+                    plumber: "Plumber",
+                    carpenter: "Carpenter",
+                    painter: "Painter",
+                    construction: "Construction Labourer",
+                    water: "Water Supply",
+                    auto: "Auto Service (Short Range)",
+                    cab: "Cab Service (Long Range)",
+                    swamy: "Swamy",
+                    flower: "Flower Vendor",
+                    decorator: "Decorator",
+                    doctor: "Doctor Service",
+                    mechanic: "Mechanic Service",
+                    parlour: "Parlour",
+                    tractor: "Tractor or Goods Vehicle Renting",
+                    haircut: "Hair Cutting in Home",
+                    caterer: "Caterer",
+                    chair: "Chair Rental Provider",
+                    cameraman: "Cameraman",
+                    gas: "Gas Stove Repair / Gas Pipeline Fitting",
+                    laundry: "Laundry / Ironing Service",
+                    soundsystem: "Sound System",
+                    welding: "Welding"
+                },
+                kn: {
+                    // Header
+                    title: "ಗ್ರೋಯಾಂಡಿ",
+                    subtitle: "ಯಮಕನಮರ್ಡಿಯಲ್ಲಿ ಸ್ಥಳೀಯ ಸೇವಾ ಒದಗಿಸುವವರನ್ನು ಹುಡುಕಿ",
+                    banner: "ಗ್ರೋಯಾಂಡಿಗೆ ಸ್ವಾಗತ - ನಿಮ್ಮ ಸ್ಥಳೀಯ ಸೇವಾ ಕೈಪಿಡಿ",
+                    
+                    // Search and Filter
+                    search: "ಹೆಸರು, ಸೇವೆ, ಅಥವಾ ಸ್ಥಳದಿಂದ ಹುಡುಕಿ...",
+                    allCategories: "ಎಲ್ಲಾ ವರ್ಗಗಳು",
+                    backToAllServices: "ಎಲ್ಲಾ ಸೇವೆಗಳಿಗೆ ಹಿಂತಿರುಗಿ",
+                    noProvidersFound: "ನಿಮ್ಮ ಹುಡುಕಾಟ ಮಾನದಂಡಗಳಿಗೆ ಯಾವುದೇ ಒದಗಿಸುವವರು ಕಂಡುಬಂದಿಲ್ಲ.",
+                    noProvidersAvailable: "ಯಾವುದೇ ಒದಗಿಸುವವರು ಲಭ್ಯವಿಲ್ಲ.",
+                    
+                    // Settings
+                    settings: "ಸೆಟ್ಟಿಂಗ್ಸ್",
+                    howItWorks: "ಇದು ಹೇಗೆ ಕೆಲಸ ಮಾಡುತ್ತದೆ?",
+                    addRemove: "ಜನರನ್ನು ಸೇರಿಸಿ / ತೆಗೆದುಹಾಕಿ",
+                    aboutUs: "ನಮ್ಮ ಬಗ್ಗೆ",
+                    
+                    // Settings Content
+                    howItWorksText: "ಈ ವಿಭಾಗವು ವೆಬ್‌ಸೈಟ್‌ನ ಬಳಕೆಯ ಬಗ್ಗೆ ಬಳಕೆದಾರರಿಗೆ ಮಾರ್ಗದರ್ಶನ ನೀಡುತ್ತದೆ. ಡೆಮೊ ವೀಡಿಯೊ ಶೀಘ್ರದಲ್ಲೇ ಅಪ್‌ಲೋಡ್ ಮಾಡಲಾಗುವುದು.",
+                    addRemoveText: "ವೈಶಿಷ್ಟ್ಯ ಶೀಘ್ರದಲ್ಲೇ ಬರುತ್ತದೆ. ನೀವು Google ಫಾರ್ಮ್ ಮೂಲಕ ಜನರನ್ನು ಸೇರಿಸಲು ಅಥವಾ ತೆಗೆದುಹಾಕಲು ಸಾಧ್ಯವಾಗುತ್ತದೆ.",
+                    
+                    // Admin Panel
+                    addProvider: "ಪ್ರೊವೈಡರ್ ಸೇರಿಸಿ",
+                    close: "ಮುಚ್ಚಿ",
+                    fullName: "ಪೂರ್ಣ ಹೆಸರು",
+                    mobileNumber: "ಮೊಬೈಲ್ ಸಂಖ್ಯೆ",
+                    serviceCategory: "ಸೇವಾ ವರ್ಗ",
+                    location: "ಸ್ಥಳ",
+                    availableTime: "ಲಭ್ಯ ಸಮಯ",
+                    photoUrl: "ಫೋಟೋ URL",
+                    
+                    // Service Categories
+                    bearer: "ಬೇರರ್ / ಹಮಾಲ್",
+                    electrician: "ವಿದ್ಯುತ್ ತಜ್ಞ",
+                    plumber: "ನೀರಾವರಿ ತಜ್ಞ",
+                    carpenter: "ಸುತ್ತಿಗೆ ತಜ್ಞ",
+                    painter: "ಬಣ್ಣಗಾರ",
+                    construction: "ನಿರ್ಮಾಣ ಕಾರ್ಮಿಕ",
+                    water: "ನೀರು ಸರಬರಾಜು",
+                    auto: "ಆಟೋ ಸೇವೆ (ಸಣ್ಣ ದೂರ)",
+                    cab: "ಕ್ಯಾಬ್ ಸೇವೆ (ದೀರ್ಘ ದೂರ)",
+                    swamy: "ಸ್ವಾಮಿ",
+                    flower: "ಹೂವು ಮಾರಾಟಗಾರ",
+                    decorator: "ಅಲಂಕಾರಕಾರ",
+                    doctor: "ವೈದ್ಯ ಸೇವೆ",
+                    mechanic: "ಮೆಕ್ಯಾನಿಕ್ ಸೇವೆ",
+                    parlour: "ಪಾರ್ಲರ್",
+                    tractor: "ಟ್ರ್ಯಾಕ್ಟರ್ ಅಥವಾ ಸರಕು ವಾಹನ ಬಾಡಿಗೆ",
+                    haircut: "ಮನೆಯಲ್ಲಿ ಕೂದಲು ಕತ್ತರಿಸುವಿಕೆ",
+                    caterer: "ಊಟದ ವ್ಯವಸ್ಥೆ",
+                    chair: "ಕುರ್ಚಿ ಬಾಡಿಗೆ ಒದಗಿಸುವವ",
+                    cameraman: "ಛಾಯಾಗ್ರಾಹಕ",
+                    gas: "ಗ್ಯಾಸ್ ಸ್ಟೋವ್ ರಿಪೇರಿ / ಗ್ಯಾಸ್ ಪೈಪ್‌ಲೈನ್ ಫಿಟ್ಟಿಂಗ್",
+                    laundry: "ಉಡುಪು ಒಗೆಯುವಿಕೆ / ಇಸ್ತ್ರಿ ಸೇವೆ",
+                    soundsystem: "ಧ್ವನಿ ವ್ಯವಸ್ಥೆ",
+                    welding: "ವೆಲ್ಡಿಂಗ್"
+                }
+            };
+
+            // Functions
+            function createProviderCard(provider, serviceDisplayName) {
+                return `
+                    <div class="provider-card">
+                        <img src="${provider.photo}" alt="${provider.name}" class="provider-image">
+                        <div class="provider-info">
+                            <h3 class="provider-name">${provider.name}</h3>
+                            <div class="provider-detail">
+                                <i class="fas fa-phone"></i>
+                                <a href="tel:${provider.phone}">${provider.phone}</a>
+                            </div>
+                            <div class="provider-detail">
+                                <i class="fas fa-briefcase"></i>
+                                <span>${serviceDisplayName}</span>
+                            </div>
+                            <div class="provider-detail">
+                                <i class="fas fa-clock"></i>
+                                <span>${provider.availability}</span>
+                            </div>
+                            <div class="provider-detail">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>${provider.location}</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+
+            function renderProviders(filteredProviders) {
+                let html = '';
+                let hasContent = false;
+                for (const [serviceKey, serviceProvidersArr] of Object.entries(filteredProviders)) {
+                    if (serviceProvidersArr.length > 0) {
+                        hasContent = true;
+                        const serviceDisplayName = translations[currentLanguage][serviceKey] || serviceCategoryDetails[serviceKey]?.name || serviceKey.charAt(0).toUpperCase() + serviceKey.slice(1);
+                        html += `<h2 class="service-title">${serviceDisplayName}</h2>`;
+                        html += `<div class="providers-grid-inner">`;
+                        html += serviceProvidersArr.map(provider => createProviderCard(provider, serviceDisplayName)).join('');
+                        html += `</div>`;
+                    }
+                }
+                if (!hasContent) {
+                    html = `<p class="no-results">${translations[currentLanguage].noProvidersFound}</p>`;
+                }
+                providersGrid.innerHTML = html;
+                providersGrid.style.display = 'grid';
+                serviceCategoriesGrid.style.display = 'none';
+                backToCategoriesBtn.style.display = 'block';
+            }
+
+            function renderServiceCategories() {
+                let html = '';
+                for (const categoryKey in serviceCategoryDetails) {
+                    const category = serviceCategoryDetails[categoryKey];
+                    const categoryDisplayName = translations[currentLanguage][categoryKey] || category.name;
+                    html += `
+                        <div class="service-category-card" data-category="${categoryKey}">
+                            <img src="${category.image}" alt="${categoryDisplayName}">
+                            <h3>${categoryDisplayName}</h3>
+                        </div>
+                    `;
+                }
+                serviceCategoriesGrid.innerHTML = html;
+                serviceCategoriesGrid.style.display = 'grid';
+                providersGrid.style.display = 'none';
+                backToCategoriesBtn.style.display = 'none';
+                searchBar.value = '';
+                categoryFilter.value = '';
+
+                // Add event listeners to newly created service category cards
+                document.querySelectorAll('.service-category-card').forEach(card => {
+                    card.addEventListener('click', (event) => {
+                        const category = event.currentTarget.dataset.category;
+                        showProvidersForCategory(category);
+                        // Track service category click
+                        gtag('event', 'service_category_click', {
+                            'event_category': 'Service Category',
+                            'event_label': category
+                        });
+                    });
+                });
+            }
+
+            function showProvidersForCategory(categoryKey) {
+                const filtered = {};
+                if (providers[categoryKey]) {
+                    filtered[categoryKey] = providers[categoryKey];
+                }
+                renderProviders(filtered);
+                categoryFilter.value = categoryKey; // Update filter dropdown
+            }
+
+            function showAllCategories() {
+                renderServiceCategories();
+                searchBar.value = '';
+                categoryFilter.value = '';
+                // Track back to categories click
+                gtag('event', 'back_to_categories_click', {
+                    'event_category': 'Navigation',
+                    'event_label': 'Back to All Services'
+                });
+            }
+
+            function filterProviders() {
+                const searchTerm = searchBar.value.toLowerCase();
+                const selectedCategory = categoryFilter.value;
+
+                const filteredProviders = {};
+                
+                for (const [service, serviceProvidersArr] of Object.entries(providers)) {
+                    if (!selectedCategory || service === selectedCategory) {
+                        const filtered = serviceProvidersArr.filter(provider => 
+                            provider.name.toLowerCase().includes(searchTerm) ||
+                            provider.location.toLowerCase().includes(searchTerm) ||
+                            (translations[currentLanguage][service] || service).toLowerCase().includes(searchTerm)
+                        );
+                        if (filtered.length > 0) {
+                            filteredProviders[service] = filtered;
+                        }
+                    }
+                }
+                return filteredProviders;
+            }
+
+            function handleSearchAndFilter() {
+                const searchTerm = searchBar.value.toLowerCase();
+                const selectedCategory = categoryFilter.value;
+
+                if (searchTerm || selectedCategory) {
+                    const filtered = filterProviders();
+                    renderProviders(filtered);
+                    // Track search/filter
+                    gtag('event', 'search_filter', {
+                        'event_category': 'Discovery',
+                        'event_label': `Search: ${searchTerm}, Category: ${selectedCategory}`
+                    });
+                } else {
+                    showAllCategories();
+                }
+            }
+
+            function updateLanguage() {
+                // Update header
+                headerTitle.textContent = translations[currentLanguage].title;
+                headerSubtitle.textContent = translations[currentLanguage].subtitle;
+                bannerText.textContent = translations[currentLanguage].banner;
+
+                // Update search and filter
+                searchBar.placeholder = translations[currentLanguage].search;
+                categoryFilter.querySelector('option[value=""]').textContent = translations[currentLanguage].allCategories;
+                backToCategoriesBtn.textContent = translations[currentLanguage].backToAllServices;
+
+                // Update settings
+                settingsTitle.textContent = translations[currentLanguage].settings;
+                document.querySelectorAll('.settings-menu button').forEach(button => {
+                    const sectionKey = button.dataset.section;
+                    if (sectionKey && translations[currentLanguage][sectionKey]) {
+                        button.textContent = translations[currentLanguage][sectionKey];
+                    }
+                });
+
+                // Update settings content
+                howItWorksTitle.textContent = translations[currentLanguage].howItWorks;
+                howItWorksText.textContent = translations[currentLanguage].howItWorksText;
+                addRemoveTitle.textContent = translations[currentLanguage].addRemove;
+                addRemoveText.textContent = translations[currentLanguage].addRemoveText;
+                aboutUsTitle.textContent = translations[currentLanguage].aboutUs;
+
+                // Update admin panel
+                document.querySelector('.btn-primary').textContent = translations[currentLanguage].addProvider;
+                closeAdmin.textContent = translations[currentLanguage].close;
+                document.querySelector('label[for="name"]').textContent = translations[currentLanguage].fullName;
+                document.querySelector('label[for="phone"]').textContent = translations[currentLanguage].mobileNumber;
+                document.querySelector('label[for="service"]').textContent = translations[currentLanguage].serviceCategory;
+                document.querySelector('label[for="location"]').textContent = translations[currentLanguage].location;
+                document.querySelector('label[for="availability"]').textContent = translations[currentLanguage].availableTime;
+                document.querySelector('label[for="photo"]').textContent = translations[currentLanguage].photoUrl;
+
+                // Update service categories in dropdown
+                const categoryOptions = categoryFilter.querySelectorAll('option');
+                categoryOptions.forEach(option => {
+                    if (option.value) {
+                        option.textContent = translations[currentLanguage][option.value];
+                    }
+                });
+
+                // Update displayed service category names on cards
+                document.querySelectorAll('.service-category-card').forEach(card => {
+                    const categoryKey = card.dataset.category;
+                    const categoryDisplayName = translations[currentLanguage][categoryKey] || serviceCategoryDetails[categoryKey]?.name || categoryKey.charAt(0).toUpperCase() + categoryKey.slice(1);
+                    card.querySelector('h3').textContent = categoryDisplayName;
+                });
+
+                // Update language toggle
+                const languageText = languageToggle.querySelector('span');
+                languageText.textContent = currentLanguage === 'en' ? 'ಕನ್ನಡ' : 'English';
+
+                // Track language change in Google Analytics
+                gtag('event', 'language_change', {
+                    'event_category': 'Language',
+                    'event_label': currentLanguage
+                });
+            }
+
+            function toggleLanguage() {
+                currentLanguage = currentLanguage === 'en' ? 'kn' : 'en';
+                updateLanguage();
+            }
+
+            function addProvider(event) {
+                event.preventDefault();
+                
+                const service = document.getElementById('service').value;
+                const newProvider = {
+                    id: Date.now(),
+                    name: document.getElementById('name').value,
+                    phone: document.getElementById('phone').value,
+                    location: document.getElementById('location').value,
+                    availability: document.getElementById('availability').value,
+                    photo: `services/${service}/${document.getElementById('name').value.toLowerCase().replace(/\s+/g, '-')}.jpg`
+                };
+
+                if (!providers[service]) {
+                    providers[service] = [];
+                }
+                providers[service].push(newProvider);
+                localStorage.setItem('providers', JSON.stringify(providers));
+                
+                renderProviders(providers); // Render all providers to show new one
+                providerForm.reset();
+                adminPanel.classList.remove('active');
+            }
+
+            // Settings Modal Functionality
+            function showSection(sectionId) {
+                // Hide all sections
+                document.querySelectorAll('.section').forEach(section => {
+                    section.classList.remove('active');
+                });
+                // Show selected section
+                document.getElementById(sectionId).classList.add('active');
+            }
+
+            // Track settings interactions with Google Analytics
+            function trackSettingsInteraction(action) {
+                gtag('event', 'settings_interaction', {
+                    'event_category': 'Settings',
+                    'event_label': action
+                });
+            }
+
+            // Event Listeners
+            searchBar.addEventListener('input', handleSearchAndFilter);
+            categoryFilter.addEventListener('change', handleSearchAndFilter);
+            adminToggle.addEventListener('click', () => adminPanel.classList.add('active'));
+            closeAdmin.addEventListener('click', () => adminPanel.classList.remove('active'));
+            providerForm.addEventListener('submit', addProvider);
+            languageToggle.addEventListener('click', toggleLanguage);
+            backToCategoriesBtn.addEventListener('click', showAllCategories);
+
+            // Event listeners for settings modal
+            settingsIcon.addEventListener('click', () => {
+                settingsModal.classList.add('active');
+                trackSettingsInteraction('open_settings');
+            });
+
+            closeSettings.addEventListener('click', () => {
+                settingsModal.classList.remove('active');
+                trackSettingsInteraction('close_settings');
+            });
+
+            settingsModal.addEventListener('click', (e) => {
+                if (e.target === settingsModal) {
+                    settingsModal.classList.remove('active');
+                    trackSettingsInteraction('close_settings_overlay');
+                }
+            });
+
+            document.querySelectorAll('.settings-menu button').forEach(button => {
+                button.addEventListener('click', (event) => {
+                    const sectionId = event.currentTarget.dataset.section;
+                    if (sectionId) {
+                        showSection(sectionId);
+                        trackSettingsInteraction(button.textContent.trim());
+                    }
+                });
+            });
+
+            // Initial render
+            renderServiceCategories(); // Start by showing service categories
+            updateLanguage(); // Apply initial language on load
+        });
+    </script>
+</body>
+</html> 
