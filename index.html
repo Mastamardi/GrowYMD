@@ -1372,6 +1372,21 @@
                 addRemoveText.textContent = translations[currentLanguage].addRemoveText;
                 aboutUsTitle.textContent = translations[currentLanguage].aboutUs;
 
+                // Update service categories in dropdown
+                const categoryOptions = categoryFilter.querySelectorAll('option');
+                categoryOptions.forEach(option => {
+                    if (option.value) {
+                        option.textContent = translations[currentLanguage][option.value];
+                    }
+                });
+
+                // Update displayed service category names on cards
+                document.querySelectorAll('.service-category-card').forEach(card => {
+                    const categoryKey = card.dataset.category;
+                    const categoryDisplayName = translations[currentLanguage][categoryKey] || serviceCategoryDetails[categoryKey]?.name || categoryKey.charAt(0).toUpperCase() + categoryKey.slice(1);
+                    card.querySelector('h3').textContent = categoryDisplayName;
+                });
+
                 // Update language toggle
                 const languageText = languageToggle.querySelector('span');
                 languageText.textContent = currentLanguage === 'en' ? 'ಕನ್ನಡ' : 'English';
@@ -1386,6 +1401,16 @@
             function toggleLanguage() {
                 currentLanguage = currentLanguage === 'en' ? 'kn' : 'en';
                 updateLanguage();
+            }
+
+            // Settings Modal Functionality
+            function showSection(sectionId) {
+                // Hide all sections
+                document.querySelectorAll('.section').forEach(section => {
+                    section.classList.remove('active');
+                });
+                // Show selected section
+                document.getElementById(sectionId).classList.add('active');
             }
 
             // Event Listeners
