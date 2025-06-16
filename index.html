@@ -1317,7 +1317,6 @@
                     if (!selectedCategory || service === selectedCategory) {
                         const filtered = serviceProvidersArr.filter(provider => 
                             provider.name.toLowerCase().includes(searchTerm) ||
-                            provider.location.toLowerCase().includes(searchTerm) ||
                             (translations[currentLanguage][service] || service).toLowerCase().includes(searchTerm)
                         );
                         if (filtered.length > 0) {
