@@ -676,6 +676,81 @@
         .remove-service-button i {
             font-size: 1.4rem;
         }
+
+        /* Add these new styles for feedback section */
+        .feedback-section {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            padding: 3rem 1rem;
+            margin: 2rem 0;
+            color: white;
+        }
+
+        .feedback-container {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .feedback-container h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: white;
+        }
+
+        .feedback-container p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .feedback-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+            background-color: white;
+            color: var(--primary-color);
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-size: 1.2rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .feedback-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+            background-color: var(--light-color);
+        }
+
+        .feedback-button i {
+            font-size: 1.4rem;
+        }
+
+        @media (max-width: 768px) {
+            .feedback-container {
+                padding: 1.5rem;
+            }
+
+            .feedback-container h2 {
+                font-size: 1.5rem;
+            }
+
+            .feedback-container p {
+                font-size: 1rem;
+            }
+
+            .feedback-button {
+                padding: 0.8rem 1.5rem;
+                font-size: 1rem;
+            }
+        }
     </style>
 </head>
 <body>
@@ -810,6 +885,17 @@
             <i class="fas fa-phone"></i>
             Contact Us: 8722507432
         </a>
+    </div>
+
+    <div class="feedback-section">
+        <div class="feedback-container">
+            <h2>Help Us Improve</h2>
+            <p>Your feedback helps us make GrowYMD better for everyone</p>
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSeUYNdxFcnoYrSpWVSW65293OQRW9xpxw24SnptgNvJQyTwIg/viewform?usp=sharing&ouid=100055803845702781433" target="_blank" class="feedback-button">
+                <i class="fas fa-comment-alt"></i>
+                Share Your Feedback
+            </a>
+        </div>
     </div>
 
     <button class="language-toggle" id="languageToggle">
