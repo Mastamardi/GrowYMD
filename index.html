@@ -636,6 +636,46 @@
         .instagram-link i {
             font-size: 1.2rem;
         }
+
+        /* Add these new styles */
+        .remove-service-banner {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            text-align: center;
+            margin: 1rem auto;
+            box-shadow: var(--card-shadow);
+            max-width: 1200px;
+        }
+
+        .remove-service-banner p {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            color: var(--text-color);
+        }
+
+        .remove-service-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+            background-color: #dc3545;
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 4px;
+            text-decoration: none;
+            font-size: 1.2rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .remove-service-button:hover {
+            background-color: #c82333;
+            transform: translateY(-2px);
+        }
+
+        .remove-service-button i {
+            font-size: 1.4rem;
+        }
     </style>
 </head>
 <body>
@@ -761,6 +801,14 @@
         <a href="https://docs.google.com/forms/d/e/1FAIpQLScOJAzfr8kqzotnvWdRoa47MI01556EmhpDq-WhJteQ-Tqswg/viewform?usp=dialog" target="_blank" class="add-provider-button">
             <i class="fas fa-plus-circle"></i>
             Add Your Service
+        </a>
+    </div>
+
+    <div class="remove-service-banner">
+        <p>Want to remove your service from the website?</p>
+        <a href="tel:8722507432" class="remove-service-button">
+            <i class="fas fa-phone"></i>
+            Contact Us: 8722507432
         </a>
     </div>
 
