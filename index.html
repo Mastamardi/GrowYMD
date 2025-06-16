@@ -604,6 +604,23 @@
         .provider-detail i {
             color: var(--primary-color);
         }
+
+        .instagram-link {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .instagram-link:hover {
+            color: var(--secondary-color);
+        }
+
+        .instagram-link i {
+            font-size: 1.2rem;
+        }
     </style>
 </head>
 <body>
@@ -1241,6 +1258,14 @@
                             <div class="provider-detail">
                                 <i class="fas fa-users"></i>
                                 <span>${provider.seatingCapacity}</span>
+                            </div>
+                            ` : ''}
+                            ${provider.name === "Ankur Sutar" ? `
+                            <div class="provider-detail">
+                                <a href="https://www.instagram.com/ankurphotography33?igsh=MWdjZGJuaDRyOWZ3OA==" target="_blank" class="instagram-link">
+                                    <i class="fab fa-instagram"></i>
+                                    <span>View Portfolio</span>
+                                </a>
                             </div>
                             ` : ''}
                             <a href="tel:${provider.phone}" class="call-now-button">
