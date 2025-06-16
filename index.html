@@ -945,41 +945,51 @@
                     {
                         id: 18,
                         name: "Santosh Pangannavar",
-                        phone: "+91 9876543217",
+                        phone: "+91 9731727104",
                         location: "Yamakanamardi",
-                        availability: "9 AM - 6 PM",
+                        availability: "24*7",
+                        car: "Tata Zest",
+                        seatingCapacity: "4+1",
                         photo: "Services/ Cab service/SantoshPangannavar.jpg"
                     },
                     {
                         id: 19,
-                        name: "Iranna Badiger",
-                        phone: "+91 8765432106",
+                        name: "Iranna Badier",
+                        phone: "+91 7829036639",
                         location: "Yamakanamardi",
-                        availability: "8 AM - 7 PM",
+                        availability: "24*7",
+                        car: "Swift Desire + Innova",
+                        seatingCapacity: "Swift Desire (4+1) + Innova (7+1)",
                         photo: "Services/ Cab service/IrannaBadiger.jpg"
                     },
                     {
                         id: 20,
                         name: "Santosh Gajabari",
-                        phone: "+91 7654321094",
+                        phone: "+91 8095839911",
                         location: "Yamakanamardi",
-                        availability: "8 AM - 5 PM",
+                        availability: "24*7",
+                        car: "Swift Desire",
+                        seatingCapacity: "4+1",
                         photo: "Services/ Cab service/SantoshGajabari.jpg"
                     },
                     {
                         id: 21,
                         name: "Kashinath Jirali",
-                        phone: "+91 9876543218",
+                        phone: "+91 7975918225",
                         location: "Yamakanamardi",
-                        availability: "9 AM - 6 PM",
+                        availability: "24*7",
+                        car: "Swift Desire + Ertiga + Cruiser",
+                        seatingCapacity: "Swift Desire (4+1) + Ertiga (6+1) + Cruiser (11+1)",
                         photo: "Services/ Cab service/KashinathJirali.jpg"
                     },
                     {
                         id: 22,
                         name: "Basavaraj Gundakalli",
-                        phone: "+91 8765432107",
+                        phone: "+91 9731327080",
                         location: "Yamakanamardi",
-                        availability: "8 AM - 7 PM",
+                        availability: "24*7",
+                        car: "Swift Desire",
+                        seatingCapacity: "4+1",
                         photo: "Services/ Cab service/BasavarajGundakalli.jpg"
                     }
                 ],
@@ -1223,6 +1233,16 @@
                                 <i class="fas fa-map-marker-alt"></i>
                                 <span>${provider.location}</span>
                             </div>
+                            ${provider.car ? `
+                            <div class="provider-detail">
+                                <i class="fas fa-car"></i>
+                                <span>${provider.car}</span>
+                            </div>
+                            <div class="provider-detail">
+                                <i class="fas fa-users"></i>
+                                <span>${provider.seatingCapacity}</span>
+                            </div>
+                            ` : ''}
                             <a href="tel:${provider.phone}" class="call-now-button">
                                 <i class="fas fa-phone"></i>
                                 Call Now
