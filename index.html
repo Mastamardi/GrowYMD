@@ -164,6 +164,21 @@
             border-top-right-radius: 8px;
         }
 
+        .provider-images {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            padding: 1rem;
+            background: #f8f8f8;
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
+        }
+
+        .provider-images .provider-image {
+            border-radius: 4px;
+            border: none;
+        }
+
         .provider-info {
             padding: 1rem;
         }
@@ -955,7 +970,8 @@
                         phone: "+91 9876543216",
                         location: "Yamakanamardi",
                         availability: "9 AM - 6 PM",
-                        photo: "Services/SoundSystem/MahanteshSarapuri.jpg"
+                        photo: "Services/SoundSystem/MahanteshSarapuri.jpg",
+                        photo2: "Services/SoundSystem/MahanteshSarapuri-p2.jpg"
                     }
                 ],
                 cab: [
@@ -1235,7 +1251,10 @@
             function createProviderCard(provider, serviceDisplayName) {
                 return `
                     <div class="provider-card">
-                        <img src="${provider.photo}" alt="${provider.name}" class="provider-image">
+                        <div class="provider-images">
+                            <img src="${provider.photo}" alt="${provider.name}" class="provider-image">
+                            ${provider.photo2 ? `<img src="${provider.photo2}" alt="${provider.name}" class="provider-image">` : ''}
+                        </div>
                         <div class="provider-info">
                             <h3 class="provider-name">${provider.name}</h3>
                             <div class="provider-detail">
