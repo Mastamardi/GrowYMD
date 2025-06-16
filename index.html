@@ -978,7 +978,8 @@
                         phone: "+91 9876543214",
                         location: "Yamakanamardi",
                         availability: "9 AM - 6 PM",
-                        photo: "Services/Water supply /SureshNilajagi.jpg"
+                        photo: "Services/Water supply /SureshNilajagi.jpg",
+                        service: "Purified Water Supply"
                     },
                     {
                         id: 13,
@@ -986,7 +987,8 @@
                         phone: "+91 8765432104",
                         location: "Yamakanamardi",
                         availability: "8 AM - 7 PM",
-                        photo: "Services/Water supply /HanamantBaragali.jpg"
+                        photo: "Services/Water supply /HanamantBaragali.jpg",
+                        service: "Water Tanker Service"
                     }
                 ],
                 auto: [
@@ -1317,7 +1319,7 @@
                             <h3 class="provider-name">${provider.name}</h3>
                             <div class="provider-detail">
                                 <i class="fas fa-briefcase"></i>
-                                <span>${serviceDisplayName}</span>
+                                <span>${provider.service || serviceDisplayName}</span>
                             </div>
                             <div class="provider-detail">
                                 <i class="fas fa-clock"></i>
